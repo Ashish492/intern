@@ -1,10 +1,17 @@
 import { z } from "zod"
 import validator from "validator"
-export interface TODO {
-  id?: number
-  body: string
-  types?: TYPES
-  order?: number
+import { Request } from "express"
+// export interface TODO {
+//   id?: number
+//   body: string
+//   types?: TYPES
+//   order?: number
+// }
+export enum TYPES {
+  TODO,
+  INPROGRESS,
+  TESTING,
+  DONE,
 }
 const todo = z.object({
   id: z.number().optional(),
@@ -12,13 +19,8 @@ const todo = z.object({
     .string()
     .trim()
     .transform(v => validator.escape(v)),
+  types: z.nativeEnum(TYPES).optional(),
+  order: z.number().optional(),
 })
-export const enum TYPES {
-  TODO,
-  INPROGRESS,
-  TESTING,
-  DONE,
-}
-// declare module "knex/types/tables" {
-//   interface Todo extends TODO {}
-// }
+export type TODO = z.infer<typeof todo>
+export type customBodyRequest<T> = Request<{}, {}, T>
