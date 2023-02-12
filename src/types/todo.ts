@@ -21,6 +21,7 @@ export const todo = z.object({
     .transform(v => validator.escape(v)),
   types: z.nativeEnum(TYPES).optional(),
   order: z.number().optional(),
+  rank: z.number().optional(),
 })
 export type TODO = z.infer<typeof todo>
 export type customBodyRequest<T> = Request<{}, {}, T>

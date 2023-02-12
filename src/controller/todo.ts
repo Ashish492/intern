@@ -5,7 +5,7 @@ import {
   getTesting,
   getTodo as getTodoModel,
 } from "../model"
-import { deleteTodo, insertTodo, move, updateOrder } from "../model/todo"
+import { deleteTodo, insertTodo, move, updateRank } from "../model/todo"
 import { TODO, TYPES, customBodyRequest, todo } from "../types/todo"
 export async function getTodo(req: Request, res: Response) {
   const todo = await getTodoModel()
@@ -37,7 +37,7 @@ export async function moveOnSame(
   res: Response
 ) {
   const { id, order } = req.body
-  const todoResult = await updateOrder(id, order)
+  const todoResult = await updateRank(id, order)
   res.json(todoResult)
 }
 export async function moveToTodo(req: Request, res: Response) {
