@@ -9,6 +9,8 @@ declare global {
       DB_DATABASE: string
       DB_PORT: number
       SECRET: string
+      ADMIN_USERNAME: string
+      ADMIN_PASSWORD: string
     }
   }
 }

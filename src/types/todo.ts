@@ -13,7 +13,7 @@ export enum TYPES {
   TESTING,
   DONE,
 }
-const todo = z.object({
+export const todo = z.object({
   id: z.number().optional(),
   body: z
     .string()

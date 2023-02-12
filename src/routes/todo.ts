@@ -1,4 +1,5 @@
 import { Router } from "express"
+import { bodyValidator } from "../middleware/validator"
 import {
   add,
   deleteTodoController,
@@ -12,10 +13,18 @@ import {
   moveToTest,
   moveToTodo,
 } from "../controller"
+import { todo } from "../types"
 
+const body = todo.pick({ body: true })
+const id = todo.pick({ id: true })
+const idAndOrder = todo.pick({ id: true, order: true }).required()
 const router = Router()
 /* route fro getting todo , inserting and deleting todo */
-router.route("/").get(getTodo).post(add).delete(deleteTodoController)
+router
+  .route("/")
+  .get(getTodo)
+  .post(bodyValidator(body), add)
+  .delete(bodyValidator(id), deleteTodoController)
 
 //route ro get progressive todo
 router.get("/progress", getProgressingController)
@@ -27,12 +36,12 @@ router.get("/testing", getTestingController)
 router.get("/done", getDoneController)
 
 // route for moving to another todo card
-router.get("/todo/move", moveToTodo)
-router.get("/progress/move", moveTOProgress)
-router.get("/testing/move", moveToTest)
-router.get("/done/move", moveToDone)
+router.put("/todo/move", bodyValidator(id), moveToTodo)
+router.put("/progress/move", bodyValidator(id), moveTOProgress)
+router.put("/testing/move", bodyValidator(id), moveToTest)
+router.put("/done/move", bodyValidator(id), moveToDone)
 
 // route for moving to same card
-router.get("/move", moveOnSame)
+router.get("/move", bodyValidator(idAndOrder), moveOnSame)
 
 export default router

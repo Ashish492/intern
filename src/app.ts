@@ -11,6 +11,7 @@ import { todoRouter } from "./routes"
 import helmet from "helmet"
 import cors from "cors"
 import { z } from "zod"
+import { initializePassport } from "./middleware"
 
 const app: Application = express()
 app.use(express.urlencoded({ extended: false }))
@@ -18,6 +19,7 @@ app.use(express.json())
 
 //modifying header
 app.use(helmet())
+app.use(initializePassport())
 app.use(cors())
 dotenv.config()
 app.get("/", (req, res) => {
