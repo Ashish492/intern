@@ -1,3 +1,5 @@
+export { login } from "./authController"
+export { addItem, deleteItem, updateItem, getItem } from "./itemController"
 export {
   getTodo,
   getProgressingController,

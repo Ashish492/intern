@@ -1,3 +1,4 @@
+import CustomError from "../Error/CustomError"
 import { TODO, TYPES } from "../types"
 import db from "../utils/connection"
 async function get(type: TYPES = TYPES.TODO) {
@@ -83,8 +84,8 @@ export async function deleteTodo(id: number) {
       .where("order", ">=", order["order"])
       .decrement("order", 1)
     await db<TODO>("todo")
-         .where("rank", ">=", order["rank"])
-         .decrement("rank", 1)
+      .where("rank", ">=", order["rank"])
+      .decrement("rank", 1)
     return order
   } catch (error) {
     throw new CustomError("unable to insert", 502, {

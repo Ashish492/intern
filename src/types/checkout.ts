@@ -1,6 +1,7 @@
 import { z } from "zod"
 
-const CheckOut = z.object({
+export const CheckOut = z.object({
+  id: z.number(),
   name: z.string(),
   email: z.string().email(),
   phone: z
@@ -11,3 +12,4 @@ const CheckOut = z.object({
   count: z.number().min(1),
   total: z.number(),
 })
+export type CHECKOUT = z.infer<typeof CheckOut>

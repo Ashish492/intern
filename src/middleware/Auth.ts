@@ -1,6 +1,6 @@
-import { NextFunction, Request, Response } from "express"
 import passport from "passport"
 import { Strategy, StrategyOptions, ExtractJwt } from "passport-jwt"
+import CustomError from "../Error/CustomError"
 const options: StrategyOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: process.env.SECRET,

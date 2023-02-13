@@ -1,6 +1,7 @@
-import { Request, Response } from "express"
+import { Response } from "express"
 import { ADMIN, customBodyRequest } from "../types"
 import jwt from "jsonwebtoken"
+import CustomError from "../Error/CustomError"
 export async function login(req: customBodyRequest<ADMIN>, res: Response) {
   const { username, password } = req.body
   try {
