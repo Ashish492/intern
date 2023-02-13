@@ -2,7 +2,9 @@ import cluster from "node:cluster"
 import http from "http"
 import os from "node:os"
 import app from "./app"
+import { config } from "dotenv"
 
+config()
 /* creating cluster */
 if (cluster.isPrimary) {
   for (let i = 0; i < os.cpus().length; i++) {
@@ -14,6 +16,7 @@ if (cluster.isPrimary) {
     cluster.fork()
   })
 } else {
+  // getting PORT
   const PORT = process.env.PORT || 5000
   const server = http.createServer(app)
   server.listen(PORT, () =>
