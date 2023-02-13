@@ -1,9 +1,13 @@
 import { Router } from "express"
-import { insertCheckout } from "../model"
 import { bodyValidator } from "../middleware"
 import { CheckOut } from "../types"
+import { getCheckOutController } from "../controller"
+import { customRouteFunction } from "../utils/asyncErrorHandler"
 
 export const checkOutRouter = Router()
 checkOutRouter
   .route("/")
-  .post(bodyValidator(CheckOut.omit({ id: true })), insertCheckout)
+  .post(
+    customRouteFunction(bodyValidator(CheckOut.omit({ id: true }))),
+    customRouteFunction(getCheckOutController)
+  )

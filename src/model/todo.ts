@@ -63,8 +63,9 @@ export async function move(id: number, types: TYPES) {
 export async function insertTodo(todo: Pick<TODO, "body">) {
   try {
     const orderCol =
-      (await db<TODO>().select("order").orderBy("order", "desc").limit(1))[0]
-        .order ?? 1
+      (
+        await db<TODO>("todo").select("order").orderBy("order", "desc").limit(1)
+      )[0].order ?? 1
     const res = await db<TODO>("todo").insert(
       { ...todo, order: orderCol, rank: orderCol },
       "*"

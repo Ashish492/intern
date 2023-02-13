@@ -14,6 +14,7 @@ import {
   moveToTodo,
 } from "../controller"
 import { todo } from "../types"
+import { customRouteFunction } from '../utils/asyncErrorHandler';
 const body = todo.pick({ body: true })
 const id = todo.pick({ id: true })
 const idAndOrder = todo.pick({ id: true, order: true }).required()
@@ -22,18 +23,18 @@ export const todoRouter = Router()
 todoRouter
   .route("/")
   .get(getTodo)
-  .post(bodyValidator(body), add)
-  .delete(bodyValidator(id), deleteTodoController)
+  .post(customRouteFunction(bodyValidator(body)), customRouteFunction(add))
+  .delete(bodyValidator(id),customRouteFunction( deleteTodoController))
 //route ro get progressive todo
-todoRouter.get("/progress", getProgressingController)
+todoRouter.get("/progress",customRouteFunction( getProgressingController))
 //route ro get testing todo
-todoRouter.get("/testing", getTestingController)
+todoRouter.get("/testing",customRouteFunction( getTestingController))
 //route ro get done todo
-todoRouter.get("/done", getDoneController)
+todoRouter.get("/done",customRouteFunction( getDoneController))
 // route for moving to another todo card
-todoRouter.put("/todo/move", bodyValidator(id), moveToTodo)
-todoRouter.put("/progress/move", bodyValidator(id), moveTOProgress)
-todoRouter.put("/testing/move", bodyValidator(id), moveToTest)
-todoRouter.put("/done/move", bodyValidator(id), moveToDone)
+todoRouter.put("/todo/move", customRouteFunction(bodyValidator(id)),customRouteFunction( moveToTodo))
+todoRouter.put("/progress/move",customRouteFunction( bodyValidator(id)),customRouteFunction( moveTOProgress))
+todoRouter.put("/testing/move", customRouteFunction(bodyValidator(id)),customRouteFunction( moveToTest))
+todoRouter.put("/done/move",customRouteFunction(bodyValidator(id)), customRouteFunction(moveToDone))
 // route for moving to same card
-todoRouter.get("/move", bodyValidator(idAndOrder), moveOnSame)
+todoRouter.get("/move",customRouteFunction(bodyValidator(idAndOrder)),customRouteFunction( moveOnSame))

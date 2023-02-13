@@ -1,9 +1,9 @@
 import { Router } from "express"
-import { login } from "../controller"
+import { getCheckOutController, login } from "../controller"
 import { itemRouter } from "./itemRoute"
-import { getCheckOut } from "../model"
+import { customRouteFunction } from '../utils/asyncErrorHandler';
 
 export const adminRoute = Router()
-adminRoute.route("/login").post(login)
-adminRoute.use("/item", itemRouter)
-adminRoute.get("/checkOut", getCheckOut)
+adminRoute.route("/login").post(customRouteFunction(login))
+adminRoute.use("/item",customRouteFunction( itemRouter))
+adminRoute.get("/checkOut",customRouteFunction( getCheckOutController))

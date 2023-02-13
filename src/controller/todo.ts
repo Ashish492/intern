@@ -1,12 +1,16 @@
 import { Request, Response } from "express"
 import {
+  deleteTodo,
   getDone,
   getProgressing,
   getTesting,
   getTodo as getTodoModel,
+  insertTodo,
+  move,
+  updateRank,
 } from "../model"
-import { deleteTodo, insertTodo, move, updateRank } from "../model/todo"
-import { TODO, TYPES, customBodyRequest, todo } from "../types/todo"
+import { TODO, TYPES, customBodyRequest } from "../types"
+import { CustomRouteFunction } from "../types/customExpress"
 export async function getTodo(req: Request, res: Response) {
   const todo = await getTodoModel()
   res.json(todo)
@@ -23,12 +27,11 @@ export async function getDoneController(req: Request, res: Response) {
   const todo = await getDone()
   res.json(todo)
 }
-export async function add(
-  req: customBodyRequest<Pick<TODO, "body">>,
-  res: Response
-) {
+export const add: CustomRouteFunction<Pick<TODO, "body">> = async (
+  req,
+  res
+) => {
   const { body } = req.body
-  await todo.pick({ body: true }).parseAsync(body)
   const resultTodo = await insertTodo({ body })
   res.json(resultTodo)
 }

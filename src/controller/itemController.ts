@@ -1,28 +1,27 @@
-import { Request, Response } from "express"
 import { add, deleteById, getItemModel, update } from "../model"
-import { customBodyRequest, ITEM } from "../types"
-export async function addItem(req: customBodyRequest<ITEM>, res: Response) {
+import { CustomRouteFunction, ITEM } from "../types"
+export const addItem: CustomRouteFunction<ITEM> = async (req, res) => {
   const { name, price, store } = req.body
   const item = await add({ name, price, store })
   res.json({ item })
 }
-export async function deleteItem(
-  req: customBodyRequest<{ id: number }>,
-  res: Response
-) {
+export const deleteItem: CustomRouteFunction<{ id: number }> = async (
+  req,
+  res
+) => {
   const { id } = req.body
   const item = await deleteById(id)
   res.json({ success: true, data: item })
 }
-export async function updateItem(
-  req: customBodyRequest<{ data: Omit<ITEM, "id">; id: number }>,
-  res: Response
-) {
+export const updateItem: CustomRouteFunction<{
+  data: Omit<ITEM, "id">
+  id: number
+}> = async (req, res) => {
   const { data, id } = req.body
   const item = await update(data, id)
   res.json({ success: true, data: item })
 }
-export async function getItem(req: Request, res: Response) {
+export const getItem: CustomRouteFunction<undefined> = async (req, res) => {
   const item = await getItemModel()
   res.json({ success: true, data: item })
 }

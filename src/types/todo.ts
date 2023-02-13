@@ -18,10 +18,10 @@ export const todo = z.object({
   body: z
     .string()
     .trim()
-    .transform(v => validator.escape(v)),
+    .transform(v => validator.escape(v))
+    .refine(v => !validator.isEmpty(v), { message: "empty value for body" }),
   types: z.nativeEnum(TYPES).optional(),
   order: z.number().optional(),
   rank: z.number().optional(),
 })
 export type TODO = z.infer<typeof todo>
-export type customBodyRequest<T> = Request<{}, {}, T>

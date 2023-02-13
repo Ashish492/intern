@@ -11,7 +11,7 @@ export async function login(req: customBodyRequest<ADMIN>, res: Response) {
     ) {
       const token = await jwt.sign(
         { username: process.env.ADMIN_USERNAME },
-        process.env.SECRET
+        process.env.SECRET as string
       )
       res.json({ success: true, token: `Bearer ${token}` })
     }

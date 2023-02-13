@@ -1,9 +1,15 @@
 import { z } from "zod"
+import validator from "validator"
 
 export const CheckOut = z.object({
   id: z.number(),
-  name: z.string(),
-  email: z.string().email(),
+  name: z
+    .string()
+    .refine(v => !validator.isEmpty(v), { message: "empty value for body" }),
+  email: z
+    .string()
+    .email()
+    .refine(v => !validator.isEmpty(v), { message: "empty value for body" }),
   phone: z
     .string()
     .length(10)
