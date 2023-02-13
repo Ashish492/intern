@@ -9,8 +9,8 @@ const options: StrategyOptions = {
 }
 passport.use(
   new Strategy(options, (payload, done) => {
-    if (payload.username === "admin") {
-      return done(null, { username: "admin" })
+    if (payload.username === process.env.ADMIN_USERNAME) {
+      return done(null, { username: process.env.ADMIN_USERNAME })
     }
     return done(new CustomError("forbidden", 401), false)
   })

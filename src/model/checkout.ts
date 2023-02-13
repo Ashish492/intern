@@ -7,16 +7,17 @@ export async function insertCheckout(
   checkOutItem: Omit<CHECKOUT, "total" | "id">
 ) {
   const price = (
-    await db<ITEM>("item").select("price").where("id", checkOutItem.itemId)
+    await db<ITEM>("Items").select("price").where("id", checkOutItem.itemId)
   )[0].price
+
   return await insert<Omit<CHECKOUT, "id">>(
     { ...checkOutItem, total: price * checkOutItem.count },
-    "checkOut"
+    "CheckOuts"
   )
 }
 export async function getCheckOut() {
   try {
-    await db<CHECKOUT>("checkOut").select("*")
+    return await db<CHECKOUT>("CheckOuts").select("*")
   } catch (error) {
     throw new CustomError("database error", 502)
   }

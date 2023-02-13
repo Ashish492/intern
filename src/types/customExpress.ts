@@ -7,3 +7,8 @@ export type CustomRouteFunction<T extends {} | undefined> = (
   res: Response,
   next: NextFunction
 ) => any
+export type BasicCustomRouteFunction = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => any

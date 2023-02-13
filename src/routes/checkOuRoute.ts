@@ -1,13 +1,15 @@
 import { Router } from "express"
 import { bodyValidator } from "../middleware"
 import { CheckOut } from "../types"
-import { getCheckOutController } from "../controller"
 import { customRouteFunction } from "../utils/asyncErrorHandler"
+import { addCheckOut } from "../controller"
 
 export const checkOutRouter = Router()
 checkOutRouter
   .route("/")
   .post(
-    customRouteFunction(bodyValidator(CheckOut.omit({ id: true }))),
-    customRouteFunction(getCheckOutController)
+    customRouteFunction(
+      bodyValidator(CheckOut.omit({ id: true, total: true }))
+    ),
+    customRouteFunction(addCheckOut)
   )

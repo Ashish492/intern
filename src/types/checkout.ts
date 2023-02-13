@@ -1,6 +1,5 @@
 import { z } from "zod"
 import validator from "validator"
-
 export const CheckOut = z.object({
   id: z.number(),
   name: z
@@ -13,7 +12,7 @@ export const CheckOut = z.object({
   phone: z
     .string()
     .length(10)
-    .refine(Number.isSafeInteger, { message: "enter valid number" }),
+    .refine(v => validator.isNumeric(v), { message: "enter valid number" }),
   itemId: z.number(),
   count: z.number().min(1),
   total: z.number(),

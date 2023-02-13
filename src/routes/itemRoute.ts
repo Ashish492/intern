@@ -4,6 +4,7 @@ import { bodyValidator } from "../middleware/validator"
 import { Item } from "../types"
 import { z } from "zod"
 import { customRouteFunction } from "../utils/asyncErrorHandler"
+import { auth } from "../middleware"
 export const itemRouter = Router()
 
 const UpdateItem = z.object({

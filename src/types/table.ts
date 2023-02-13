@@ -1,1 +1,1 @@
-export type TableName = "checkOut" | "todo" | "item"
+export type TableName = "CheckOuts" | "Todos" | "Items"

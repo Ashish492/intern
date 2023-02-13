@@ -2,6 +2,8 @@ import { Response } from "express"
 import { ADMIN, customBodyRequest } from "../types"
 import jwt from "jsonwebtoken"
 import CustomError from "../Error/CustomError"
+import dotenv from "dotenv"
+
 export async function login(req: customBodyRequest<ADMIN>, res: Response) {
   const { username, password } = req.body
   try {
@@ -14,6 +16,8 @@ export async function login(req: customBodyRequest<ADMIN>, res: Response) {
         process.env.SECRET as string
       )
       res.json({ success: true, token: `Bearer ${token}` })
+    } else {
+      throw new Error("incorrect")
     }
   } catch (error) {
     throw new CustomError("password or email incorrect", 401)
